@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
-
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 // MUI Stuff
 import Card from '@material-ui/core/Card';
@@ -29,7 +29,7 @@ const styles = {
 
 class Scream extends Component {
   render() {
-
+    dayjs.extend(relativeTime)
     const {
       classes,
       scream: {
@@ -37,7 +37,6 @@ class Scream extends Component {
         createdAt,
         userImage,
         userHandle,
-        screamId,
         likeCount,
         commentCount
       },
@@ -61,23 +60,16 @@ class Scream extends Component {
           >
             {userHandle}
           </Typography>
-
-   
+        
+          <Typography variant="body2" color="textSecondary">Posted: {dayjs(createdAt).fromNow()}</Typography>  
+          <Typography variant="body2" color="textSecondary">Likes: {likeCount}</Typography>  
+          <Typography variant="body2" color="textSecondary">Comments: {commentCount}</Typography>  
           <Typography variant="body1">{body}</Typography>
-
-          <span>{likeCount} Likes</span>
-
-
-          <span>{commentCount} comments</span>
 
         </CardContent>
       </Card>
     );
   }
 }
-
-
-
-
 
 export default (withStyles(styles)(Scream));
