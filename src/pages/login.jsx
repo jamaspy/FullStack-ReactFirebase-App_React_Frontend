@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/login2.svg";
+import AppIcon from "../images/manLogin.svg";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 //MUI Stuff
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { TextField } from "@material-ui/core";
+import { TextField, CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 const styles = {
@@ -16,12 +16,16 @@ const styles = {
 		textAlign: "center"
 	},
 	image: {
-		maxWidth: 120,
+		maxWidth: 150,
 		margin: "20px auto"
 	},
 	button: {
-		margin: "20px auto"
-	},
+        margin: "20px auto",
+        position: "relative",
+    },
+    progress:{
+        position: "absolute"
+    },
 	textField: {
 		margin: "10px auto"
     },
@@ -54,7 +58,8 @@ class login extends Component {
 		axios
 			.post("/login", userData)
 			.then(res => {
-				console.log(res.data);
+                console.log(res.data);
+                localStorage.setItem(`FBIdToken`,`Bearer ${res.data.token}`);
 				this.setState({
 					loading: false
 				});
@@ -120,9 +125,13 @@ class login extends Component {
 							color='primary'
 							variant='contained'
 							onClick={this.handleSubmit}
-							className={classes.button}
+                            className={classes.button}
+                            disabled={loading}
 						>
 							Login
+                            {loading && (
+                                <CircularProgress size={20} color="primary" className={classes.progress}/>
+                            )}
 						</Button>
                         <br/>
                         <small>Need An Account? Sign Up <Link to="/signup">Here</Link></small>
