@@ -2,4 +2,4 @@
 
 Full stack personal project centered around the functionality of Twitter. 
 
-## Working In Progrss 
+## Work In Progress 
